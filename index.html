@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CreditPulse ML Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#overview" aria-label="CreditPulse home">
+      <span class="brand-mark">CP</span>
+      <span><strong>CreditPulse</strong><small>Risk Analytics Lab</small></span>
+    </a>
+    <nav>
+      <a class="active" href="#overview"><span>01</span>Snapshot</a>
+      <a href="#predict"><span>02</span>Risk scoring</a>
+      <a href="#models"><span>03</span>Model report</a>
+      <a href="#data"><span>04</span>Data preview</a>
+    </nav>
+    <div class="sidebar-status">
+      <span class="status-dot"></span>
+      <div><strong>Service active</strong><small id="trainedAt">Loading model...</small></div>
+    </div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Credit Risk Modeling / Customer Default</p>
+        <h1>Credit risk analytics dashboard</h1>
+      </div>
+      <button id="retrainButton" class="outline-button" type="button">Refresh models</button>
+    </header>
+
+    <section id="overview" class="section">
+      <div class="summary-grid">
+        <article class="metric-card metric-primary">
+          <span>Top algorithm</span>
+          <strong id="bestModel">Loading</strong>
+          <small>Ranked by ROC AUC</small>
+        </article>
+        <article class="metric-card">
+          <span>Best ROC AUC</span>
+          <strong id="bestAuc">--</strong>
+          <small>Validation strength</small>
+        </article>
+        <article class="metric-card">
+          <span>Dataset size</span>
+          <strong id="datasetRows">--</strong>
+          <small>Customer records</small>
+        </article>
+        <article class="metric-card">
+          <span>At-risk rate</span>
+          <strong id="positiveRate">--</strong>
+          <small>Default-risk share</small>
+        </article>
+      </div>
+    </section>
+
+    <section id="predict" class="section prediction-layout">
+      <div class="panel form-panel">
+        <div class="panel-heading">
+          <div><p class="eyebrow">Instant scoring</p><h2>Applicant risk check</h2></div>
+          <span class="live-badge">Active API</span>
+        </div>
+        <form id="predictionForm">
+          <label>Age<input name="age" type="number" min="18" max="90" value="42" required></label>
+          <label>Monthly income<input name="monthly_income" type="number" min="0" value="4200" required></label>
+          <label>Debt ratio<input name="debt_ratio" type="number" min="0" max="1" step="0.01" value="0.34" required></label>
+          <label>Credit score<input name="credit_score" type="number" min="300" max="900" value="680" required></label>
+          <label>Prior defaults<input name="prior_defaults" type="number" min="0" max="10" value="0" required></label>
+          <label>Engagement score<input name="engagement_score" type="number" min="0" max="100" value="62" required></label>
+          <button class="primary-button" type="submit">Calculate risk score</button>
+        </form>
+      </div>
+
+      <div class="panel result-panel">
+        <div class="panel-heading"><div><p class="eyebrow">Scoring result</p><h2>Approval profile</h2></div></div>
+        <div id="emptyResult" class="empty-result">
+          <div class="empty-ring"><span>?</span></div>
+          <strong>Ready for assessment</strong>
+          <p>Enter customer details and calculate a score.</p>
+        </div>
+        <div id="predictionResult" class="prediction-result hidden">
+          <div class="risk-hero">
+            <div class="risk-gauge"><span id="riskProbability">0%</span><small>risk score</small></div>
+            <div><span id="riskBadge" class="risk-badge">Low risk</span><h3 id="decisionText">Likely safe to approve</h3><p>Scored with <strong id="predictionModel"></strong></p></div>
+          </div>
+          <div class="result-section"><span>Algorithm agreement</span><div id="modelConsensus"></div></div>
+          <div class="result-section"><span>Risk indicators</span><div id="riskDrivers" class="driver-list"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="models" class="section">
+      <div class="section-heading"><div><p class="eyebrow">Validation summary</p><h2>Algorithm performance</h2></div><p>Models are compared on the held-out test dataset.</p></div>
+      <div class="model-layout">
+        <div class="panel table-panel">
+          <table>
+            <thead><tr><th>Model</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1</th><th>ROC AUC</th></tr></thead>
+            <tbody id="metricsTable"></tbody>
+          </table>
+        </div>
+        <div class="panel importance-panel">
+          <div class="panel-heading"><div><p class="eyebrow">Explainability</p><h2>Risk factor weight</h2></div></div>
+          <div id="importanceChart"></div>
+        </div>
+      </div>
+      <div class="chart-grid">
+        <article class="panel chart-panel"><div class="panel-heading"><h2>ROC curve review</h2><a href="roc_curve.svg" target="_blank">Open full size</a></div><img src="roc_curve.svg" alt="ROC curve comparing models"></article>
+        <article class="panel chart-panel"><div class="panel-heading"><h2>Classification matrix</h2><a href="confusion_matrix.svg" target="_blank">Open full size</a></div><img src="confusion_matrix.svg" alt="Best model confusion matrix"></article>
+      </div>
+    </section>
+
+    <section id="data" class="section">
+      <div class="section-heading"><div><p class="eyebrow">Training source</p><h2>Customer data preview</h2></div><a class="outline-button" href="customer_default_dataset.csv" download>Download CSV</a></div>
+      <div class="panel data-panel"><div id="dataTableWrap"><p>Loading data preview...</p></div></div>
+    </section>
+  </main>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>

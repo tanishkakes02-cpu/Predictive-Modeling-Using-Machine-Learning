@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="470" height="370" viewBox="0 0 470 370">
+<rect width="470" height="370" fill="#ffffff"/>
+<text x="235" y="38" text-anchor="middle" font-size="24" font-family="Arial" font-weight="700">Confusion Matrix</text>
+<text x="235" y="335" text-anchor="middle" font-size="15" font-family="Arial">Predicted class</text>
+<text x="30" y="210" transform="rotate(-90 30 210)" text-anchor="middle" font-size="15" font-family="Arial">Actual class</text>
+<g font-family="Arial" fill="#14213d"><rect x="130" y="90" width="150" height="120" fill="rgb(120, 175, 230)" stroke="#243447"/><text x="205" y="140" text-anchor="middle" font-size="22" font-weight="700">TN</text><text x="205" y="172" text-anchor="middle" font-size="28">153</text><rect x="280" y="90" width="150" height="120" fill="rgb(231, 242, 254)" stroke="#243447"/><text x="355" y="140" text-anchor="middle" font-size="22" font-weight="700">FP</text><text x="355" y="172" text-anchor="middle" font-size="28">5</text><rect x="130" y="210" width="150" height="120" fill="rgb(225, 239, 252)" stroke="#243447"/><text x="205" y="260" text-anchor="middle" font-size="22" font-weight="700">FN</text><text x="205" y="292" text-anchor="middle" font-size="28">13</text><rect x="280" y="210" width="150" height="120" fill="rgb(231, 243, 254)" stroke="#243447"/><text x="355" y="260" text-anchor="middle" font-size="22" font-weight="700">TP</text><text x="355" y="292" text-anchor="middle" font-size="28">4</text></g>
+</svg>
